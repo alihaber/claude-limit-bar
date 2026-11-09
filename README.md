@@ -2,9 +2,9 @@
 
 Claude Code için bir mod. Mesaj kutusunun hemen üstünde, kullanım limitlerini bir bakışta gösteren küçük bir bant çizer.
 
-![limit-bar örnek görünüm](assets/preview.svg)
+![limit-bar, Claude masaüstü uygulamasında mesaj kutusunun üstünde](assets/screenshot.png)
 
-<sub>Örnek görünüm: sayılar temsilidir; renkler ve yazı tipi temanıza göre değişir.</sub>
+<sub>Claude masaüstü uygulamasında gerçek görünüm. Renkler ve yazı tipi temanıza göre değişir.</sub>
 
 Bantta şunlar var:
 
