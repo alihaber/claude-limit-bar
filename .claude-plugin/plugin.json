@@ -1,1 +1,15 @@
-{ "name": "limit-bar", "version": "0.1.0", "description": "Mesaj kutusunun üstünde 5 saatlik ve haftalık limit, tahmini bitiş ve model başına token kullanımı", "license": "Apache-2.0", "types": "./types/index.d.ts" }
+{
+  "name": "limit-bar",
+  "version": "0.2.0",
+  "description": "Mesaj kutusunun üstünde 5 saatlik ve haftalık limit, tahmini bitiş, model başına token kullanımı ve (isteğe bağlı) alt ajan durumu",
+  "license": "Apache-2.0",
+  "types": "./types/index.d.ts",
+  "userConfig": {
+    "altAjanDosyasi": {
+      "type": "string",
+      "title": "Alt ajan durum dosyası (isteğe bağlı)",
+      "description": "Bir alt ajanın (ör. dış bir kod yazıcı) durumunu yazan JSON dosyasının yolu. Boşsa alt ajan satırı gösterilmez. Biçim README'de.",
+      "default": ""
+    }
+  }
+}

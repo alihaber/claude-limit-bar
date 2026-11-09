@@ -1,7 +1,17 @@
 import { atom, read, update } from 'claude-code'
 import type { EngineInterface, Register } from 'claude-code'
 
-import type { Limit, ModelTokens } from '../types'
+import type { AltAjan, Limit, ModelTokens } from '../types'
+
+// Alt ajan (Codex vb.) durumu: kullanıcının `altAjanDosyasi` ayarında verdiği JSON dosyasını bant 3 sn'de bir okur
+// (biçim README'de). Ayar boşsa alt ajan satırı hiç çizilmez. Dosya yolu koda gömülmez.
+const altAjan = atom({ plugin: 'limit-bar', key: 'altAjan' } as const, null as AltAjan | null)
+const ALT_ADLAR: Record<string, string> = { calisiyor: 'çalışıyor', 'kod yaziyor': 'kod yazıyor', takildi: 'TAKILDI', bitti: 'bitti', 'surec yok': 'süreç yok' }
+function altRenk(d: string): string {
+  if (d === 'takildi' || d === 'surec yok') return 'error'
+  if (d === 'kod yaziyor') return 'success'
+  return d === 'bitti' ? 'subtle' : 'warning'
+}
 
 const limits = atom({ plugin: 'limit-bar', key: 'limits' } as const, [] as Limit[], { shape: 'limits-1' })
 const byModel = atom({ plugin: 'limit-bar', key: 'byModel' } as const, {} as ModelTokens, { shape: 'models-1' })
@@ -56,8 +66,31 @@ async function refresh($: EngineInterface) {
   if (u.cost) await update($, costUsd, () => u.cost!.usd)
 }
 
-export const register: Register = on => {
+export const register: Register = (on, options) => {
+  let sonAltAjanMetni = ''
+  const altAjanDosyasi = String((options as Record<string, unknown> | undefined)?.altAjanDosyasi ?? '').trim()
+
   on('session.start', async ($, e, next) => {
+    // Alt ajan dosyasını 3 sn'de bir oku; yalnız içerik değişince yaz (gereksiz yeniden çizim olmasın).
+    if (altAjanDosyasi) {
+      $.clock.every(3000, async () => {
+        let metin = ''
+        try {
+          metin = await $.fs.read(altAjanDosyasi)
+        } catch {
+          metin = ''
+        }
+        if (metin === sonAltAjanMetni) return
+        sonAltAjanMetni = metin
+        let d: AltAjan | null = null
+        try {
+          d = metin ? (JSON.parse(metin) as AltAjan) : null
+        } catch {
+          d = null
+        }
+        await update($, altAjan, () => d)
+      })
+    }
     await $.command.register({ name: 'limitbar', description: 'Limit barını göster/gizle' })
     const r = await next(e)
     await refresh($)
@@ -114,6 +147,25 @@ export const register: Register = on => {
         )
       })
 
+    // Alt ajan satırı: bitmiş kayıt 10 dk, izleyicisi durmuş çalışan kayıt 2 dk sonra eski sayılır.
+    const aa = await read($, altAjan)
+    let altSatir = null
+    if (aa) {
+      const yasSn = (now - Date.parse(aa.guncelleme)) / 1000
+      const bitmis = aa.durum === 'bitti' || aa.durum === 'surec yok'
+      if (Number.isFinite(yasSn) && !(bitmis && yasSn > 600)) {
+        const durdu = !bitmis && yasSn > 120
+        const ad = ALT_ADLAR[aa.durum] ?? aa.durum
+        altSatir = (
+          <Box key="altajan">
+            <Text>Alt ajan {aa.ad} </Text>
+            <Text color={durdu ? 'warning' : altRenk(aa.durum)}>{durdu ? `${ad} (izleyici durdu)` : ad}</Text>
+            <Text dimColor> · {aa.cikti_kb} KB{aa.token ? ` · ${aa.token} token` : ''} · {aa.kod_dosyasi} kod dosyası · {Math.floor(aa.sure_sn / 60)} dk</Text>
+          </Box>
+        )
+      }
+    }
+
     const modelText = Object.entries(models)
       .sort((a, b) => b[1] - a[1])
       .map(([m, t]) => `${m} ${fmtTokens(t)}`)
@@ -122,6 +174,7 @@ export const register: Register = on => {
     return (
       <Box flexDirection="column">
         {rows.length ? rows : <Text dimColor>Limit verisi ilk yanıttan sonra gelecek.</Text>}
+        {altSatir}
         <Box>
           <Text dimColor>
             Bu oturum: {modelText || 'henüz token yok'}{cost ? ` · $${cost.toFixed(2)}` : ''}{' '}
