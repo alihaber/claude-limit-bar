@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="210" viewBox="0 0 820 210" role="img" aria-label="limit-bar örnek görünüm: mesaj kutusunun üstünde 5 saatlik ve haftalık limit çubukları, sıfırlanma saatleri, tahmini bitiş ve model başına token">
+  <style>
+    text { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "DejaVu Sans Mono", monospace; font-size: 14px; fill: #e6e6e6; }
+    .dim { fill: #8a8a8a; }
+    .subtle { fill: #a8a8a8; }
+    .ok { fill: #4eba65; }
+    .warn { fill: #e5b350; }
+    .err { fill: #ff6b80; }
+    .tag { font-size: 11px; fill: #c9c9c9; letter-spacing: 0.5px; }
+  </style>
+
+  <!-- pencere -->
+  <rect x="0.5" y="0.5" width="819" height="209" rx="10" fill="#1b1b1d" stroke="#3a3a3e"/>
+  <rect x="664" y="12" width="140" height="20" rx="10" fill="#2d2d31" stroke="#4a4a50"/>
+  <text x="734" y="26" text-anchor="middle" class="tag">ÖRNEK GÖRÜNÜM</text>
+
+  <text x="24" y="28" class="dim">… sohbet …</text>
+
+  <!-- satır 1: 5 saat, %68 (yeşil) -->
+  <text x="24" y="66">5 saat</text>
+  <g class="ok">
+    <rect x="90"  y="54" width="9" height="15"/><rect x="101" y="54" width="9" height="15"/>
+    <rect x="112" y="54" width="9" height="15"/><rect x="123" y="54" width="9" height="15"/>
+    <rect x="134" y="54" width="9" height="15"/><rect x="145" y="54" width="9" height="15"/>
+    <rect x="156" y="54" width="9" height="15"/>
+  </g>
+  <g fill="#3a3a3e">
+    <rect x="167" y="54" width="9" height="15"/><rect x="178" y="54" width="9" height="15"/>
+    <rect x="189" y="54" width="9" height="15"/>
+  </g>
+  <text x="208" y="66"><tspan class="ok">%68</tspan><tspan class="dim"> · sıfırlanma 14:30 · </tspan><tspan class="subtle">bu hızla yeter</tspan></text>
+
+  <!-- satır 2: Hafta, %74 (sarı) ve erken bitiş uyarısı -->
+  <text x="24" y="94">Hafta</text>
+  <g class="warn">
+    <rect x="90"  y="82" width="9" height="15"/><rect x="101" y="82" width="9" height="15"/>
+    <rect x="112" y="82" width="9" height="15"/><rect x="123" y="82" width="9" height="15"/>
+    <rect x="134" y="82" width="9" height="15"/><rect x="145" y="82" width="9" height="15"/>
+    <rect x="156" y="82" width="9" height="15"/>
+  </g>
+  <g fill="#3a3a3e">
+    <rect x="167" y="82" width="9" height="15"/><rect x="178" y="82" width="9" height="15"/>
+    <rect x="189" y="82" width="9" height="15"/>
+  </g>
+  <text x="208" y="94"><tspan class="warn">%74</tspan><tspan class="dim"> · sıfırlanma Cum 09:00 · </tspan><tspan class="warn">bu hızla Per 18:40'de biter ⚠</tspan></text>
+
+  <!-- satır 3: oturum token'ları + Gizle -->
+  <text x="24" y="122" class="dim">Bu oturum: Opus 1.2M · Sonnet 340K · Haiku 12K · $3.48</text>
+  <rect x="724" y="107" width="72" height="22" rx="5" fill="#2d2d31" stroke="#5a5a62"/>
+  <text x="760" y="122" text-anchor="middle">Gizle</text>
+
+  <!-- mesaj kutusu -->
+  <rect x="16.5" y="144.5" width="787" height="46" rx="8" fill="#151517" stroke="#5a5a62"/>
+  <text x="34" y="172" class="dim">&gt; Bir mesaj yazın…</text>
+</svg>

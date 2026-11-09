@@ -1,8 +1,14 @@
 # limit-bar
 
-Claude Code için bir mod. Mesaj kutusunun hemen üstünde, kullanım limitlerini bir bakışta gösteren küçük bir bant çizer:
+Claude Code için bir mod. Mesaj kutusunun hemen üstünde, kullanım limitlerini bir bakışta gösteren küçük bir bant çizer.
 
-- **5 saatlik** ve **haftalık** limitin doluluk yüzdesi (renkli çubukla: yeşil, sarı, kırmızı)
+![limit-bar örnek görünüm](assets/preview.svg)
+
+<sub>Örnek görünüm: sayılar temsilidir; renkler ve yazı tipi temanıza göre değişir.</sub>
+
+Bantta şunlar var:
+
+- **5 saatlik** ve **haftalık** limitin doluluk yüzdesi (renkli çubukla: %70 altı yeşil, %70–89 sarı, %90 ve üstü kırmızı)
 - Her limitin **sıfırlanma** saati
 - **Tahmini bitiş**: şimdiki tüketim hızıyla limitin sıfırlanmadan önce dolup dolmayacağı, dolacaksa ne zaman
 - Bu oturumda **model başına** harcanan token (Opus, Sonnet, Haiku…) ve varsa oturum maliyeti
