@@ -6,6 +6,10 @@ Claude Code için bir mod. Mesaj kutusunun hemen üstünde, kullanım limitlerin
 
 <sub>Claude masaüstü uygulamasında gerçek görünüm. Renkler ve yazı tipi temanıza göre değişir.</sub>
 
+**v0.2.0** — isteğe bağlı alt ajan durum satırıyla:
+
+![limit-bar v0.2.0: alt ajan satırı](assets/screenshot-0.2.0.png)
+
 Bantta şunlar var:
 
 - **5 saatlik** ve **haftalık** limitin doluluk yüzdesi (renkli çubukla: %70 altı yeşil, %70–89 sarı, %90 ve üstü kırmızı)
